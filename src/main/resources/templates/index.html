@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <span data-th-text="${names}"></span> -->
+    <!-- <span data-th-text="${session.errors}"></span> -->
+    <span data-th-text="${session.form}"></span>
+    <h1> THIS IS FUND TRANSFER </h1>
+    <hr>
+    <!-- data-th-action="@{/pizza/order}" data-th-object="${confirm}"  -->
+    <!-- data-th-object="${session.form}" -->
+    <!-- data-th-field="*{fromAccount}" -->
+    <form action="#" data-th-action="@{/transfer}" method="post">
+        <table>
+            <tr>
+                <td>
+                    From account: 
+                </td>
+                <td> 
+                    <select name="fromAccount">
+                        <option value="0">select option</option>
+                        <option 
+                            data-th-each="name : ${names}" 
+                            data-th-value="${name}" 
+                            data-th-text="${name}"
+                            data-th-selected="(${name} == ${session?.form?.fromAccount})">
+                        </option>
+                    </select> 
+                </td>
+            </tr>
+            
+            <tr>
+                <td>To account: </td>
+                <td> 
+                    <select name="toAccount">
+                        <option value="0">select option</option>
+                        <option 
+                            data-th-each="name : ${names}" 
+                            data-th-value="${name}" 
+                            data-th-text="${name}"
+                            data-th-selected="(${name} == ${session?.form?.toAccount})">
+                        </option>
+                    </select> 
+                </td>
+            </tr>
+            </tr>
+
+            <tr>
+                <td>Amount: </td>
+                <td> <input type="text" name="amount" data-th-value="${session?.form?.amount}"> </td>
+            </tr>
+
+            <tr>
+                <td>Comments: </td>
+                <td> 
+                    <textarea 
+                        id="txtArea" 
+                        rows="3" 
+                        cols="30" 
+                        placeholder="Type here" 
+                        name="comments"
+                        data-th-text="${session?.form?.comments}"></textarea> 
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Transfer</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div data-th-if="${session.errors}">
+        <h2>Errors: </h2>
+        <ul>
+            <li data-th-each="error : ${session.errors}" data-th-text="${error}"></li>
+        </ul>
+    </div>
+</body>
+</html>

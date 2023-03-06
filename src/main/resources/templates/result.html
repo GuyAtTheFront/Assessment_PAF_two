@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span data-th-text="${session.form}"></span>
+    <span data-th-text="${session.transactionId}"></span>
+    <h1> THIS IS RESULT </h1>
+    <hr>
+    <h3> Transfer Summary: </h3>
+    <ul>
+        <li data-th-text="'From: ' + ${session.form.fromAccount}"></li>
+        <li data-th-text="'To: ' + ${session.form.toAccount}"></li>
+        <li data-th-text="'Amount: $' + ${session.form.amount}"></li>
+        <li data-th-text="'Transaction ID: ' + ${session.transactionId}"></li>
+    </ul>
+</body>
+</html>
