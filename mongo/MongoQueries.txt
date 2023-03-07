@@ -1,0 +1,52 @@
+use acme_bank;
+show collections;
+db.accounts.insertOne(
+{
+    "account_id": 'V9L3Jd1BBI', 
+    'name': 'fred',
+    'balance: 100.00   
+}
+);
+
+db.accounts.insertOne(
+{
+    "account_id": 'fhRq46Y6vB', 
+    'name': 'barney',
+    'balance: 300.00   
+}
+);
+
+db.accounts.insertOne(
+{
+    "account_id": 'uFSFRqUpJy', 
+    'name': 'wilma',
+    'balance: 1000.00   
+}
+);
+
+db.accounts.insertOne(
+{
+    "account_id": 'ckTV56axff', 
+    'name': 'betty',
+    'balance: 1000.00   
+}
+);
+
+db.accounts.insertOne(
+{
+    "account_id": 'Qgcnwbshbh', 
+    'name': 'pebbles',
+    'balance: 50.00   
+}
+);
+
+db.accounts.insertOne(
+{
+    "account_id": 'if9l185l18', 
+    'name': 'bambam',
+    'balance: 50.00   
+}
+);
+
+
+db.accounts.find({});

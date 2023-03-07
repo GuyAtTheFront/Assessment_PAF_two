@@ -1,6 +1,5 @@
 package iss.nus.Assessment_PAF_2.Controllers;
 
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import iss.nus.Assessment_PAF_2.Models.Form;
 import iss.nus.Assessment_PAF_2.Repositories.AcccountsRepository;
+import iss.nus.Assessment_PAF_2.Repositories.MongoAccountsRepository;
 import iss.nus.Assessment_PAF_2.Services.FundsTransferService;
 import iss.nus.Assessment_PAF_2.Services.LogAuditService;
+import iss.nus.Assessment_PAF_2.Services.MongoLogService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -32,6 +33,12 @@ public class FundsTransferController {
     @Autowired
     LogAuditService logService;
 
+    @Autowired
+    MongoAccountsRepository mongoRepo;
+
+    @Autowired
+    MongoLogService mongoLog;
+
     @GetMapping("/")
     public String fundTransfer(Model model, HttpSession session) {
         
@@ -40,7 +47,8 @@ public class FundsTransferController {
             session.invalidate();
         }
 
-        List<String> names = accRepo.getNamesForForm();
+        // List<String> names = accRepo.getNamesForForm();
+        List<String> names = mongoRepo.getNameForForm();
 
         System.out.println("controller --> " + names);
         model.addAttribute("names", names);
@@ -63,7 +71,8 @@ public class FundsTransferController {
         List<String> errors = new LinkedList<>();
 
         // c0
-        List<String> names = accRepo.getNamesForForm();
+        // List<String> names = accRepo.getNamesForForm();
+        List<String> names = mongoRepo.getNameForForm();
         
         if(!names.contains(form.getFromAccount())) {
             errors.add("From Account does not exist");
@@ -99,7 +108,8 @@ public class FundsTransferController {
         }
 
         // c5
-        Optional<Double> balanceOpt = accRepo.getBalanceByID(form.getFromId());
+        // Optional<Double> balanceOpt = accRepo.getBalanceByID(form.getFromId());
+        Optional<Double> balanceOpt = mongoRepo.getBalanceByID(form.getFromId());
         
         if (balanceOpt.isPresent()) {
             if(balanceOpt.get() - form.getAmount() < 0) {
@@ -123,6 +133,7 @@ public class FundsTransferController {
 
         // auditlog
         // logService.saveLog(transactionId, form);
+        mongoLog.saveLog(transactionId, form);
 
         session.setAttribute("transactionId", transactionId);
         session.setAttribute("status", "complete");
